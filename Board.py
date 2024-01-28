@@ -1,4 +1,3 @@
-import pygame
 from util.Square import Square
 
 
