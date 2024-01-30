@@ -1,4 +1,5 @@
 from util.Square import Square
+from GamePiece import GamePiece
 
 
 class Board:
@@ -9,7 +10,7 @@ class Board:
         self.square_width = width // 8
         self.square_height = height // 8
         self.squares = self.create_squares()
-        self.board_state = []
+        self.board_state = self.place_initial_pieces()
 
     def create_squares(self):
         squares = []
@@ -20,7 +21,7 @@ class Board:
         return squares
 
     def place_initial_pieces(self):
-        self.board_state = [
+        init_board_state = [
             ['bRook', 'bKnight', 'bBishop', 'bQueen', 'bKing', 'bBishop', 'bKnight', 'bRook'],
             ['bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn'],
             ['', '', '', '', '', '', '', ''],
@@ -30,6 +31,22 @@ class Board:
             ['wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn'],
             ['wRook', 'wKnight', 'wBishop', 'wQueen', 'wKing', 'wBishop', 'wKnight', 'wRook'],
         ]
+
+        board_state = [[None]*8]*8
+        '''
+        for i in range(8):
+            for j in range(8):
+                piece_code = init_board_state[i][j]
+                if piece_code == '':
+                    board_state[i][j] = None
+                    continue
+                color = piece_code[:1]
+                piece_type = piece_code[1:]
+
+                board_state[i][j] = GamePiece(i, j, color, piece_type, self.square_width)
+        '''
+
+        return board_state
 
     def draw_board(self, screen):
         for square in self.squares:
