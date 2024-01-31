@@ -14,10 +14,12 @@ board_surface = pygame.Surface((board_size, board_size))
 board_x = window_size[0] // 2 - board_size // 2
 board_y = window_size[1] // 2 - board_size // 2
 
+board = Board(board_size, board_size)
+
+
 def draw():
     # draw board surface
     screen.fill("pink")
-    board = Board(board_size, board_size)
     board.draw_board(board_surface)
 
     # draw board surface onto screen
@@ -41,9 +43,7 @@ while True:
             raise SystemExit
         if event.type == pygame.MOUSEBUTTONDOWN:
             if is_on_board(mouse[0], mouse[1]):
-                print('on board')
-            else:
-                print('not on board')
+                board.handle_click(mouse[0]-board_x, mouse[1]-board_y)
 
     draw()
 

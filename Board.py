@@ -75,3 +75,6 @@ class Board:
                 piece = self.board_state[i][j]
                 if piece is not None:
                     piece.draw(board_surface)
+
+    def handle_click(self, x_relative, y_relative):
+        print(x_relative, y_relative)
