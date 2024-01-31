@@ -14,9 +14,9 @@ class Square:
 
     def determine_color(self):
         if (self.x + self.y) % 2 == 0:
-            return 0, 0, 0
+            return 112, 102, 119
         else:
-            return 255, 255, 255
+            return 204, 183, 174
 
     def draw(self, display):
         pygame.draw.rect(display, self.color, self.rect)

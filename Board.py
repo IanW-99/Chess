@@ -1,5 +1,13 @@
+import sys
+
 from util.Square import Square
 from GamePiece import GamePiece
+from GamePieces.Bishop import Bishop
+from GamePieces.King import King
+from GamePieces.Knight import Knight
+from GamePieces.Pawn import Pawn
+from GamePieces.Queen import Queen
+from GamePieces.Rook import Rook
 
 
 class Board:
@@ -32,8 +40,8 @@ class Board:
             ['wRook', 'wKnight', 'wBishop', 'wQueen', 'wKing', 'wBishop', 'wKnight', 'wRook'],
         ]
 
-        board_state = [[None]*8]*8
-        '''
+        board_state = [[GamePiece for _ in range(8)] for _ in range(8)]
+
         for i in range(8):
             for j in range(8):
                 piece_code = init_board_state[i][j]
@@ -43,11 +51,27 @@ class Board:
                 color = piece_code[:1]
                 piece_type = piece_code[1:]
 
-                board_state[i][j] = GamePiece(i, j, color, piece_type, self.square_width)
-        '''
+                if piece_type == 'Bishop':
+                    board_state[i][j] = Bishop(j, i, color, self.square_width)
+                elif piece_type == 'King':
+                    board_state[i][j] = King(j, i, color, self.square_width)
+                elif piece_type == 'Knight':
+                    board_state[i][j] = Knight(j, i, color, self.square_width)
+                elif piece_type == 'Pawn':
+                    board_state[i][j] = Pawn(j, i, color, self.square_width)
+                elif piece_type == 'Queen':
+                    board_state[i][j] = Queen(j, i, color, self.square_width)
+                else:
+                    board_state[i][j] = Rook(j, i, color, self.square_width)
 
         return board_state
 
-    def draw_board(self, screen):
+    def draw_board(self, board_surface):
         for square in self.squares:
-            square.draw(screen)
+            square.draw(board_surface)
+
+        for i in range(8):
+            for j in range(8):
+                piece = self.board_state[i][j]
+                if piece is not None:
+                    piece.draw(board_surface)
