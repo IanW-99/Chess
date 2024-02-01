@@ -19,13 +19,14 @@ class Board:
         self.square_height = height // 8
         self.squares = self.create_squares()
         self.board_state = self.place_initial_pieces()
+        self.selected_square = None
 
     def create_squares(self):
-        squares = []
+        squares = {}
         for y in range(8):
             for x in range(8):
                 square = Square(x, y, self.square_width, self.square_height)
-                squares.append(square)
+                squares[x,y] = square
         return squares
 
     def place_initial_pieces(self):
@@ -67,7 +68,7 @@ class Board:
         return board_state
 
     def draw_board(self, board_surface):
-        for square in self.squares:
+        for square in self.squares.values():
             square.draw(board_surface)
 
         for i in range(8):
@@ -78,3 +79,7 @@ class Board:
 
     def handle_click(self, x_relative, y_relative):
         print(x_relative, y_relative)
+
+
+    # def get_square(self, pos_x, pos_y):
+

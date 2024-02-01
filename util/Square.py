@@ -3,6 +3,7 @@ import pygame
 
 class Square:
     def __init__(self, x, y, width, height):
+        self.is_selected = False
         self.x = x
         self.y = y
         self.width = width
@@ -14,9 +15,15 @@ class Square:
 
     def determine_color(self):
         if (self.x + self.y) % 2 == 0:
-            return 112, 102, 119
+            if self.is_selected:
+                return 150, 255, 100
+            else:
+                return 112, 102, 119
         else:
-            return 204, 183, 174
+            if self.is_selected:
+                return 50, 220, 0
+            else:
+                return 204, 183, 174
 
     def draw(self, display):
         pygame.draw.rect(display, self.color, self.rect)
