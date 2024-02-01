@@ -26,6 +26,7 @@ class Square:
                 return 204, 183, 174
 
     def draw(self, display):
+        self.color = self.determine_color()
         pygame.draw.rect(display, self.color, self.rect)
 
     def get_coord(self):
