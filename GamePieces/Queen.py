@@ -4,13 +4,14 @@ from GamePiece import GamePiece
 
 
 class Queen(GamePiece):
-    def __init__(self, x, y, color, size):
-        super().__init__(x, y, color, size, 'Queen')
+    def __init__(self, x, y, color, size, board):
+        super().__init__(x, y, color, size, 'Queen', board)
 
         self.pos_x = x
         self.pos_y = y
         self.color = color
         self.size = size
+        self.board = board
 
     def draw(self, board_surface):
         if self.color == 'w':
