@@ -33,7 +33,7 @@ class Pawn(GamePiece):
         if self.color == 'b':
             return self.get_moves_black()
         else:
-            return None
+            return self.get_moves_white()
 
     def get_moves_black(self):
         # flag moves
@@ -54,6 +54,28 @@ class Pawn(GamePiece):
 
         if self.can_move_to(self.pos_x-1, self.pos_y+1, 'attack'):
             moves.append(((self.pos_x-1, self.pos_y+1), 'attack'))
+
+        return moves
+
+    def get_moves_white(self):
+        # flag moves
+        moves = []
+
+        # forward moves
+        if not self.has_moved \
+                and self.can_move_to(self.pos_x, self.pos_y-1, 'move') \
+                and self.can_move_to(self.pos_x, self.pos_y-2, 'move'):
+            moves.append(((self.pos_x, self.pos_y-2), 'move'))
+
+        if self.can_move_to(self.pos_x, self.pos_y-1, 'move'):
+            moves.append(((self.pos_x, self.pos_y-1), 'move'))
+
+        # diagonal attacks
+        if self.can_move_to(self.pos_x+1, self.pos_y-1, 'attack'):
+            moves.append(((self.pos_x+1, self.pos_y-1), 'attack'))
+
+        if self.can_move_to(self.pos_x-1, self.pos_y-1, 'attack'):
+            moves.append(((self.pos_x-1, self.pos_y-1), 'attack'))
 
         return moves
 
