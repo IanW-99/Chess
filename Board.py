@@ -53,17 +53,17 @@ class Board:
                 piece_type = piece_code[1:]
 
                 if piece_type == 'Bishop':
-                    board_state[i][j] = Bishop(j, i, color, self.square_width)
+                    board_state[i][j] = Bishop(j, i, color, self.square_width, self)
                 elif piece_type == 'King':
-                    board_state[i][j] = King(j, i, color, self.square_width)
+                    board_state[i][j] = King(j, i, color, self.square_width, self)
                 elif piece_type == 'Knight':
-                    board_state[i][j] = Knight(j, i, color, self.square_width)
+                    board_state[i][j] = Knight(j, i, color, self.square_width, self)
                 elif piece_type == 'Pawn':
-                    board_state[i][j] = Pawn(j, i, color, self.square_width)
+                    board_state[i][j] = Pawn(j, i, color, self.square_width, self)
                 elif piece_type == 'Queen':
-                    board_state[i][j] = Queen(j, i, color, self.square_width)
+                    board_state[i][j] = Queen(j, i, color, self.square_width, self)
                 else:
-                    board_state[i][j] = Rook(j, i, color, self.square_width)
+                    board_state[i][j] = Rook(j, i, color, self.square_width, self)
 
         return board_state
 
@@ -78,14 +78,37 @@ class Board:
                     piece.draw(board_surface)
 
     def handle_click(self, x_relative, y_relative):
-        square = self.get_square(x_relative, y_relative)
-        if self.selected_square is not None:
-            self.selected_square.is_selected = False
-            self.selected_square = None
-        self.selected_square = square
-        square.is_selected = True
+        x = (x_relative - 1) // self.square_width
+        y = (y_relative - 1) // self.square_height
 
-    def get_square(self, pos_x, pos_y):
-        x_scaled = (pos_x-1) // self.square_width
-        y_scaled = (pos_y-1) // self.square_height
-        return self.squares[x_scaled, y_scaled]
+        square = self.get_square(x, y)
+        if self.selected_square is not None:
+            self.selected_square.status = 'none'
+            self.selected_square = None
+        self.default_squares()
+        self.selected_square = square
+        square.status = 'selected'
+        square_content = self.get_square_content(x, y)
+        # recolor the squares for each of the moves
+        if square_content is None:
+            return
+        moves = square_content.get_moves()
+        self.update_squares(moves)
+
+    def get_square(self, x, y):
+        return self.squares[x, y]
+
+    def get_square_content(self, x, y):
+        return self.board_state[y][x]
+
+    def update_squares(self, moves):
+
+        for move in moves:
+            x = move[0][0]
+            y = move[0][1]
+            square = self.get_square(x, y)
+            square.status = move[1]
+
+    def default_squares(self):
+        for square in self.squares.values():
+            square.status = ''
