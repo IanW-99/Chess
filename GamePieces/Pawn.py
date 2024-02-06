@@ -85,7 +85,7 @@ class Pawn(GamePiece):
         square_content = self.board.get_square_content(x, y)
         if square_content is None and move_type == 'move':
             return True
-        if square_content is GamePiece:
+        if square_content is not None:
             if square_content.get_color() != self.color and move_type == 'attack':
                 return True
         return False
