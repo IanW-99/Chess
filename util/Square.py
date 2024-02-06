@@ -42,4 +42,9 @@ class Square:
     def get_coord(self):
         return self.x, self.y
 
+    def get_coord_x(self):
+        return self.x
+
+    def get_coord_y(self):
+        return self.y
 

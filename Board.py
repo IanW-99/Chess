@@ -83,8 +83,19 @@ class Board:
 
         square = self.get_square(x, y)
         if self.selected_square is not None:
-            self.selected_square.status = 'none'
-            self.selected_square = None
+            if square.status == '':
+                self.selected_square.status = ''
+                self.selected_square = None
+            else:
+                square_content = self.get_square_content(self.selected_square.x, self.selected_square.y)
+                if square_content is not None:
+                    square_content.move(x, y)
+                    self.update_square_content(self.selected_square.x, self.selected_square.y, None)
+                    self.update_square_content(x, y, square_content)
+                    self.selected_square = None
+                    self.default_squares()
+                    return
+
         self.default_squares()
         self.selected_square = square
         square.status = 'selected'
@@ -100,6 +111,9 @@ class Board:
 
     def get_square_content(self, x, y):
         return self.board_state[y][x]
+
+    def update_square_content(self, x, y, piece):
+        self.board_state[y][x] = piece
 
     def update_squares(self, moves):
 
