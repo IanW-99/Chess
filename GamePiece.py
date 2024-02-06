@@ -22,7 +22,7 @@ class GamePiece:
         return self.color
 
     @classmethod
-    def get_moves(self):
+    def get_moves(cls):
         pass
 
     def get_pos(self):
@@ -30,3 +30,7 @@ class GamePiece:
 
     def is_valid_square(self, x, y):
         return 0 <= x <= 7 and 0 <= y <= 7
+
+    @classmethod
+    def move(cls):
+        pass
