@@ -21,7 +21,3 @@ class Knight(GamePiece):
 
         scaled_img = pygame.transform.scale(img, (self.size, self.size))
         board_surface.blit(scaled_img, (self.pos_x * self.size, self.pos_y * self.size))
-
-    def move(self, x, y):
-        self.pos_x = x
-        self.pos_y = y

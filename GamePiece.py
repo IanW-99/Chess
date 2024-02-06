@@ -32,5 +32,5 @@ class GamePiece:
         return 0 <= x <= 7 and 0 <= y <= 7
 
     @classmethod
-    def move(cls):
+    def move(cls, x, y):
         pass

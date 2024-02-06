@@ -12,6 +12,7 @@ class Rook(GamePiece):
         self.color = color
         self.size = size
         self.board = board
+        self.has_moved = False
 
     def draw(self, board_surface):
         if self.color == 'w':
@@ -25,3 +26,4 @@ class Rook(GamePiece):
     def move(self, x, y):
         self.pos_x = x
         self.pos_y = y
+        self.has_moved = True
