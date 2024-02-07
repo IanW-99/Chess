@@ -30,52 +30,29 @@ class Pawn(GamePiece):
         self.has_moved = True
 
     def get_moves(self):
+        # flag moves
+        moves = []
+
         if self.color == 'b':
-            return self.get_moves_black()
+            y_adjustment = 1
         else:
-            return self.get_moves_white()
-
-    def get_moves_black(self):
-        # flag moves
-        moves = []
+            y_adjustment = -1
 
         # forward moves
         if not self.has_moved \
-                and self.can_move_to(self.pos_x, self.pos_y+1, 'move') \
-                and self.can_move_to(self.pos_x, self.pos_y+2, 'move'):
-            moves.append(((self.pos_x, self.pos_y+2), 'move'))
+                and self.can_move_to(self.pos_x, self.pos_y + (1 * y_adjustment), 'move') \
+                and self.can_move_to(self.pos_x, self.pos_y + (2 * y_adjustment), 'move'):
+            moves.append(((self.pos_x, self.pos_y + (2 * y_adjustment)), 'move'))
 
-        if self.can_move_to(self.pos_x, self.pos_y+1, 'move'):
-            moves.append(((self.pos_x, self.pos_y+1), 'move'))
-
-        # diagonal attacks
-        if self.can_move_to(self.pos_x+1, self.pos_y+1, 'attack'):
-            moves.append(((self.pos_x+1, self.pos_y+1), 'attack'))
-
-        if self.can_move_to(self.pos_x-1, self.pos_y+1, 'attack'):
-            moves.append(((self.pos_x-1, self.pos_y+1), 'attack'))
-
-        return moves
-
-    def get_moves_white(self):
-        # flag moves
-        moves = []
-
-        # forward moves
-        if not self.has_moved \
-                and self.can_move_to(self.pos_x, self.pos_y-1, 'move') \
-                and self.can_move_to(self.pos_x, self.pos_y-2, 'move'):
-            moves.append(((self.pos_x, self.pos_y-2), 'move'))
-
-        if self.can_move_to(self.pos_x, self.pos_y-1, 'move'):
-            moves.append(((self.pos_x, self.pos_y-1), 'move'))
+        if self.can_move_to(self.pos_x, self.pos_y + y_adjustment, 'move'):
+            moves.append(((self.pos_x, self.pos_y + y_adjustment), 'move'))
 
         # diagonal attacks
-        if self.can_move_to(self.pos_x+1, self.pos_y-1, 'attack'):
-            moves.append(((self.pos_x+1, self.pos_y-1), 'attack'))
+        if self.can_move_to(self.pos_x + 1, self.pos_y + y_adjustment, 'attack'):
+            moves.append(((self.pos_x + 1, self.pos_y + y_adjustment), 'attack'))
 
-        if self.can_move_to(self.pos_x-1, self.pos_y-1, 'attack'):
-            moves.append(((self.pos_x-1, self.pos_y-1), 'attack'))
+        if self.can_move_to(self.pos_x - 1, self.pos_y + y_adjustment, 'attack'):
+            moves.append(((self.pos_x - 1, self.pos_y + y_adjustment), 'attack'))
 
         return moves
 

@@ -33,15 +33,15 @@ class Bishop(GamePiece):
             for i in range(1, 8):
                 x_adjustment = i * x_factor
                 y_adjustment = i * y_factor
-                if not self.is_valid_square(x+x_adjustment, y+y_adjustment):
+                if not self.is_valid_square(x + x_adjustment, y + y_adjustment):
                     break
-                if self.board.get_square_content(x+x_adjustment, y+y_adjustment) is not None:
+                if self.board.get_square_content(x + x_adjustment, y + y_adjustment) is not None:
                     move_type = 'attack'
                 else:
                     move_type = 'move'
 
-                if self.can_move_to(x+x_adjustment, y+y_adjustment, move_type):
-                    moves.append(((x+x_adjustment, y+y_adjustment), move_type))
+                if self.can_move_to(x + x_adjustment, y + y_adjustment, move_type):
+                    moves.append(((x + x_adjustment, y + y_adjustment), move_type))
                     if move_type == 'attack':
                         break
                 else:
