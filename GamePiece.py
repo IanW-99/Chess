@@ -8,7 +8,7 @@ class GamePiece:
         self.pos_y = y
         self._color = color
         self.size = size
-        self.piece_type = piece_type
+        self._piece_type = piece_type
         self.board = board
 
     @property
@@ -19,15 +19,13 @@ class GamePiece:
     def color(self, value):
         self._color = value
 
+    @property
+    def piece_type(self):
+        return self._piece_type
+
     @classmethod
     def draw(cls, screen):
         pass
-
-    def get_piece_type(self):
-        return self.piece_type
-
-    def get_color(self):
-        return self.color
 
     @classmethod
     def get_moves(cls):

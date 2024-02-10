@@ -106,12 +106,7 @@ class Board:
                     self.update_square_content(x, y, selected_square_content)
                     self.selected_square = None
                     self.default_squares()
-
-                    if self.turn == 'w':
-                        self.turn = 'b'
-                    else:
-                        self.turn = 'w'
-
+                    self.update_turn()
                     return
 
         self.default_squares()
@@ -145,3 +140,8 @@ class Board:
         for square in self.squares.values():
             square.status = ''
 
+    def update_turn(self):
+        if self.turn == 'w':
+            self.turn = 'b'
+        else:
+            self.turn = 'w'
