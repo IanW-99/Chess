@@ -20,6 +20,15 @@ class Board:
         self.squares = self.create_squares()
         self.board_state = self.place_initial_pieces()
         self.selected_square = None
+        self._turn = 'w'
+
+    @property
+    def turn(self):
+        return self._turn
+
+    @turn.setter
+    def turn(self, value):
+        self._turn = value
 
     def create_squares(self):
         squares = {}
@@ -82,18 +91,27 @@ class Board:
         y = (y_relative - 1) // self.square_height
 
         square = self.get_square(x, y)
+        square_content = self.get_square_content(x, y)
+        if square_content is not None and square_content.color != self.turn and square.status != 'attack':
+            return
         if self.selected_square is not None:
-            if square.status == '':
+            if square.status == '' or square == self.selected_square:
                 self.selected_square.status = ''
                 self.selected_square = None
             else:
-                square_content = self.get_square_content(self.selected_square.x, self.selected_square.y)
-                if square_content is not None:
-                    square_content.move(x, y)
+                selected_square_content = self.get_square_content(self.selected_square.x, self.selected_square.y)
+                if selected_square_content is not None:
+                    selected_square_content.move(x, y)
                     self.update_square_content(self.selected_square.x, self.selected_square.y, None)
-                    self.update_square_content(x, y, square_content)
+                    self.update_square_content(x, y, selected_square_content)
                     self.selected_square = None
                     self.default_squares()
+
+                    if self.turn == 'w':
+                        self.turn = 'b'
+                    else:
+                        self.turn = 'w'
+
                     return
 
         self.default_squares()
@@ -126,3 +144,4 @@ class Board:
     def default_squares(self):
         for square in self.squares.values():
             square.status = ''
+

@@ -16,6 +16,11 @@ board_y = window_size[1] // 2 - board_size // 2
 
 board = Board(board_size, board_size)
 
+font = pygame.font.Font('freesansbold.ttf', 32)
+
+turn_message = font.render('White Turn', True, 'Black')
+turn_message_rect = turn_message.get_rect()
+
 
 def draw():
     # draw board surface
@@ -24,6 +29,9 @@ def draw():
 
     # draw board surface onto screen
     screen.blit(board_surface, (board_x, board_y))
+
+    # display turn message
+    screen.blit(turn_message, turn_message_rect)
 
 
 def is_on_board(x, y):
@@ -44,6 +52,11 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if is_on_board(mouse[0], mouse[1]):
                 board.handle_click(mouse[0]-board_x, mouse[1]-board_y)
+
+    if board.turn == 'w':
+        turn_message = font.render('White Turn', True, 'Black')
+    else:
+        turn_message = font.render('Black Turn', True, 'Black')
 
     draw()
 

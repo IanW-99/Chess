@@ -6,10 +6,18 @@ class GamePiece:
 
         self.pos_x = x
         self.pos_y = y
-        self.color = color
+        self._color = color
         self.size = size
         self.piece_type = piece_type
         self.board = board
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        self._color = value
 
     @classmethod
     def draw(cls, screen):
