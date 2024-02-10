@@ -24,7 +24,7 @@ class Queen(GamePiece):
 
     def get_moves(self):
         moves = []
-        direction_sets = {(0, 1), (0, -1), (1, 0), (1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)}
+        direction_sets = {(0, 1), (0, -1), (1, 0), (1, 1), (1, -1), (-1, 0), (-1, 1), (-1, -1)}
         x = self.pos_x
         y = self.pos_y
         for direction_set in direction_sets:
