@@ -18,6 +18,8 @@ class Board:
         self.square_width = width // 8
         self.square_height = height // 8
         self.squares = self.create_squares()
+        self.black_king: King = King(4, 0, 'b', self.square_width, self)
+        self.white_king: King = King(4, 7, 'w', self.square_width, self)
         self.board_state = self.place_initial_pieces()
         self.selected_square = None
         self._turn = 'w'
@@ -64,7 +66,10 @@ class Board:
                 if piece_type == 'Bishop':
                     board_state[i][j] = Bishop(j, i, color, self.square_width, self)
                 elif piece_type == 'King':
-                    board_state[i][j] = King(j, i, color, self.square_width, self)
+                    if color == 'w':
+                        board_state[i][j] = self.white_king
+                    else:
+                        board_state[i][j] = self.black_king
                 elif piece_type == 'Knight':
                     board_state[i][j] = Knight(j, i, color, self.square_width, self)
                 elif piece_type == 'Pawn':
@@ -107,6 +112,7 @@ class Board:
                     self.selected_square = None
                     self.default_squares()
                     self.update_turn()
+                    print(self.is_in_check(self.board_state, self.turn))
                     return
 
         self.default_squares()
@@ -145,3 +151,17 @@ class Board:
             self.turn = 'b'
         else:
             self.turn = 'w'
+
+    def is_in_check(self, board_state, color):
+        # iterate through all moves and check if any are same square as king
+        if color == 'w':
+            king_location = self.white_king.get_pos()
+        else:
+            king_location = self.black_king.get_pos()
+
+        for row in board_state:
+            for piece in row:
+                if issubclass(piece.__class__, GamePiece) and piece.color != color:
+                    moves = piece.get_moves()
+                    if len(moves) > 0 and (king_location, 'attack') in moves:
+                        return True
