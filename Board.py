@@ -1,5 +1,4 @@
-import sys
-
+import copy
 from util.Square import Square
 from GamePiece import GamePiece
 from GamePieces.Bishop import Bishop
@@ -112,7 +111,6 @@ class Board:
                     self.selected_square = None
                     self.default_squares()
                     self.update_turn()
-                    print(self.is_in_check(self.board_state, self.turn))
                     return
 
         self.default_squares()
@@ -162,6 +160,16 @@ class Board:
         for row in board_state:
             for piece in row:
                 if issubclass(piece.__class__, GamePiece) and piece.color != color:
-                    moves = piece.get_moves()
+                    moves = piece.generate_moves()
                     if len(moves) > 0 and (king_location, 'attack') in moves:
                         return True
+                    else:
+                        pass
+
+    def sim_board_state(self, piece: GamePiece, x, y):
+        temp_board_state = copy.deepcopy(self.board_state)
+        origin = piece.get_pos()
+        temp_board_state[y][x] = piece
+        temp_board_state[origin[1]][origin[0]] = None
+
+        return temp_board_state

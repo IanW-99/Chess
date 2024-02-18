@@ -29,7 +29,7 @@ class Pawn(GamePiece):
         self.pos_y = y
         self.has_moved = True
 
-    def get_moves(self):
+    def generate_moves(self):
         # flag moves
         moves = []
 

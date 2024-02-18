@@ -38,6 +38,7 @@ class Square:
     def draw(self, display):
         highlight = self.determine_highlight_color()
         pygame.draw.rect(display, highlight, self.rect)
+        # update to keep original color border of square at all times
 
     def get_coord(self):
         return self.x, self.y

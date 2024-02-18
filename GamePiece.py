@@ -28,7 +28,11 @@ class GamePiece:
         pass
 
     @classmethod
-    def get_moves(cls):
+    def generate_moves(cls):
+        return list
+
+    @classmethod
+    def move(cls, x, y):
         pass
 
     def get_pos(self):
@@ -37,6 +41,24 @@ class GamePiece:
     def is_valid_square(self, x, y):
         return 0 <= x <= 7 and 0 <= y <= 7
 
-    @classmethod
-    def move(cls, x, y):
-        pass
+    def causes_check(self, x, y):
+        temp_board_state = self.board.sim_board_state(self, x, y)
+        if self.board.is_in_check(temp_board_state, self.color):
+            return True
+        return False
+
+    def get_moves(self):
+        validated_moves = []
+        unvalidated_moves = self.generate_moves()
+        if unvalidated_moves is not None:
+            validated_moves = self.validate_moves(unvalidated_moves)
+        return validated_moves
+
+    def validate_moves(self, moves: list):
+        # reverse list to avoid iteration being interrupted by remove()
+        for move in reversed(moves):
+            if not self.causes_check(move[0][0], move[0][1]):
+                continue
+            moves.remove(move)
+        return moves
+

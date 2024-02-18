@@ -22,7 +22,7 @@ class King(GamePiece):
         scaled_img = pygame.transform.scale(img, (self.size, self.size))
         board_surface.blit(scaled_img, (self.pos_x * self.size, self.pos_y * self.size))
 
-    def get_moves(self):
+    def generate_moves(self):
         moves = []
         direction_sets = {(0, 1), (0, -1), (1, 0), (1, 1), (1, -1), (-1, 0), (-1, 1), (-1, -1)}
         x = self.pos_x
