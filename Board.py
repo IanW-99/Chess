@@ -18,8 +18,6 @@ class Board:
         self.square_width = width // 8
         self.square_height = height // 8
         self.squares = self.create_squares()
-        self.black_king: King = King(4, 0, 'b', self.square_width, self)
-        self.white_king: King = King(4, 7, 'w', self.square_width, self)
         self.board_state = self.place_initial_pieces()
         self.selected_square = None
         self._turn = 'w'
@@ -40,46 +38,9 @@ class Board:
                 squares[x, y] = square
         return squares
 
-    def place_initial_pieces(self):
-        init_board_state = [
-            ['bRook', 'bKnight', 'bBishop', 'bQueen', 'bKing', 'bBishop', 'bKnight', 'bRook'],
-            ['bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn'],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn'],
-            ['wRook', 'wKnight', 'wBishop', 'wQueen', 'wKing', 'wBishop', 'wKnight', 'wRook'],
-        ]
-
-        board_state = [[GamePiece for _ in range(8)] for _ in range(8)]
-
-        for i in range(8):
-            for j in range(8):
-                piece_code = init_board_state[i][j]
-                if piece_code == '':
-                    board_state[i][j] = None
-                    continue
-                color = piece_code[:1]
-                piece_type = piece_code[1:]
-
-                if piece_type == 'Bishop':
-                    board_state[i][j] = Bishop(j, i, color, self.square_width, self)
-                elif piece_type == 'King':
-                    if color == 'w':
-                        board_state[i][j] = self.white_king
-                    else:
-                        board_state[i][j] = self.black_king
-                elif piece_type == 'Knight':
-                    board_state[i][j] = Knight(j, i, color, self.square_width, self)
-                elif piece_type == 'Pawn':
-                    board_state[i][j] = Pawn(j, i, color, self.square_width, self)
-                elif piece_type == 'Queen':
-                    board_state[i][j] = Queen(j, i, color, self.square_width, self)
-                else:
-                    board_state[i][j] = Rook(j, i, color, self.square_width, self)
-
-        return board_state
+    def default_squares(self):
+        for square in self.squares.values():
+            square.status = ''
 
     def draw_board(self, board_surface):
         for square in self.squares.values():
@@ -128,7 +89,8 @@ class Board:
         moves = square_content.get_moves()
         self.update_squares(moves)
 
-    def get_king_location(self, board_state, color):
+    @staticmethod
+    def get_king_location(board_state, color):
         for y in range(8):
             for x in range(8):
                 piece = board_state[y][x]
@@ -141,27 +103,6 @@ class Board:
 
     def get_square_content(self, x, y):
         return self.board_state[y][x]
-
-    def update_square_content(self, x, y, piece):
-        self.board_state[y][x] = piece
-
-    def update_squares(self, moves):
-
-        for move in moves:
-            x = move[0][0]
-            y = move[0][1]
-            square = self.get_square(x, y)
-            square.status = move[1]
-
-    def default_squares(self):
-        for square in self.squares.values():
-            square.status = ''
-
-    def update_turn(self):
-        if self.turn == 'w':
-            self.turn = 'b'
-        else:
-            self.turn = 'w'
 
     def is_in_check(self, board_state, color):
         # iterate through all moves and check if any are same square as king
@@ -185,6 +126,44 @@ class Board:
                     return False
                 return True
 
+    def place_initial_pieces(self):
+        init_board_state = [
+            ['bRook', 'bKnight', 'bBishop', 'bQueen', 'bKing', 'bBishop', 'bKnight', 'bRook'],
+            ['bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn', 'bPawn'],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn', 'wPawn'],
+            ['wRook', 'wKnight', 'wBishop', 'wQueen', 'wKing', 'wBishop', 'wKnight', 'wRook'],
+        ]
+
+        board_state = [[GamePiece for _ in range(8)] for _ in range(8)]
+
+        for i in range(8):
+            for j in range(8):
+                piece_code = init_board_state[i][j]
+                if piece_code == '':
+                    board_state[i][j] = None
+                    continue
+                color = piece_code[:1]
+                piece_type = piece_code[1:]
+
+                if piece_type == 'Bishop':
+                    board_state[i][j] = Bishop(j, i, color, self.square_width, self)
+                elif piece_type == 'King':
+                    board_state[i][j] = King(j, i, color, self.square_width, self)
+                elif piece_type == 'Knight':
+                    board_state[i][j] = Knight(j, i, color, self.square_width, self)
+                elif piece_type == 'Pawn':
+                    board_state[i][j] = Pawn(j, i, color, self.square_width, self)
+                elif piece_type == 'Queen':
+                    board_state[i][j] = Queen(j, i, color, self.square_width, self)
+                else:
+                    board_state[i][j] = Rook(j, i, color, self.square_width, self)
+
+        return board_state
+
     def sim_board_state(self, piece: GamePiece, x, y):
         temp_board_state = copy.deepcopy(self.board_state)
         origin = piece.get_pos()
@@ -192,3 +171,20 @@ class Board:
         temp_board_state[origin[1]][origin[0]] = None
 
         return temp_board_state
+
+    def update_square_content(self, x, y, piece):
+        self.board_state[y][x] = piece
+
+    def update_squares(self, moves):
+
+        for move in moves:
+            x = move[0][0]
+            y = move[0][1]
+            square = self.get_square(x, y)
+            square.status = move[1]
+
+    def update_turn(self):
+        if self.turn == 'w':
+            self.turn = 'b'
+        else:
+            self.turn = 'w'
