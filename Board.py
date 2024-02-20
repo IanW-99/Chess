@@ -181,7 +181,7 @@ class Board:
             for piece in row:
                 if not issubclass(piece.__class__, GamePiece) and piece.color == color:
                     continue
-                if piece.get_moves() is not None:
+                if len(piece.get_moves()) > 0:
                     return False
                 return True
 
