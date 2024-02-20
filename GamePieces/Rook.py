@@ -14,6 +14,17 @@ class Rook(GamePiece):
         self.board = board
         self.has_moved = False
 
+    def can_move_to(self, x, y, move_type):
+        if not self.is_valid_square(x, y):
+            return False
+        square_content = self.board.get_square_content(x, y)
+        if square_content is None and move_type == 'move':
+            return True
+        if square_content is not None:
+            if square_content.color != self.color and move_type == 'attack':
+                return True
+        return False
+
     def draw(self, board_surface):
         if self.color == 'w':
             img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\wRook.png')
@@ -49,17 +60,6 @@ class Rook(GamePiece):
                     break
 
         return moves
-
-    def can_move_to(self, x, y, move_type):
-        if not self.is_valid_square(x, y):
-            return False
-        square_content = self.board.get_square_content(x, y)
-        if square_content is None and move_type == 'move':
-            return True
-        if square_content is not None:
-            if square_content.color != self.color and move_type == 'attack':
-                return True
-        return False
 
     def move(self, x, y):
         self.pos_x = x
