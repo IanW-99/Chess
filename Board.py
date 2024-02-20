@@ -128,10 +128,13 @@ class Board:
         moves = square_content.get_moves()
         self.update_squares(moves)
 
-    def get_king_location(self, color):
-        if color == 'w':
-            return self.white_king.get_pos()
-        return self.black_king.get_pos()
+    def get_king_location(self, board_state, color):
+        for y in range(8):
+            for x in range(8):
+                piece = board_state[y][x]
+                if not issubclass(piece.__class__, GamePiece) or piece.color != color or piece.piece_type != 'King':
+                    continue
+                return x, y
 
     def get_square(self, x, y):
         return self.squares[x, y]
@@ -162,7 +165,7 @@ class Board:
 
     def is_in_check(self, board_state, color):
         # iterate through all moves and check if any are same square as king
-        king_location = self.get_king_location(color)
+        king_location = self.get_king_location(board_state, color)
 
         for row in board_state:
             for piece in row:
