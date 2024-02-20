@@ -22,6 +22,10 @@ turn_message = font.render('White Turn', True, 'Black')
 turn_message_rect = turn_message.get_rect()
 
 
+def get_game_state():
+    return
+
+
 def draw():
     # draw board surface
     screen.fill("pink")

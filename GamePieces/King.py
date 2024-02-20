@@ -54,7 +54,6 @@ class King(GamePiece):
         if square_content is not None:
             if square_content.color != self.color and move_type == 'attack':
                 return True
-        # add check for king being capturable
         return False
 
     def move(self, x, y):

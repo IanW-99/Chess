@@ -12,6 +12,7 @@ from GamePieces.Rook import Rook
 class Board:
 
     def __init__(self, width, height):
+        self.checkmate = False
         self.width = width
         self.height = height
         self.square_width = width // 8
@@ -111,6 +112,10 @@ class Board:
                     self.selected_square = None
                     self.default_squares()
                     self.update_turn()
+                    if not self.is_in_check(self.board_state, self.turn):
+                        return
+                    if self.is_in_checkmate(self.turn):
+                        print("checkmate")
                     return
 
         self.default_squares()
@@ -122,6 +127,11 @@ class Board:
             return
         moves = square_content.get_moves()
         self.update_squares(moves)
+
+    def get_king_location(self, color):
+        if color == 'w':
+            return self.white_king.get_pos()
+        return self.black_king.get_pos()
 
     def get_square(self, x, y):
         return self.squares[x, y]
@@ -152,10 +162,7 @@ class Board:
 
     def is_in_check(self, board_state, color):
         # iterate through all moves and check if any are same square as king
-        if color == 'w':
-            king_location = self.white_king.get_pos()
-        else:
-            king_location = self.black_king.get_pos()
+        king_location = self.get_king_location(color)
 
         for row in board_state:
             for piece in row:
@@ -165,6 +172,15 @@ class Board:
                         return True
                     else:
                         pass
+
+    def is_in_checkmate(self, color):
+        for row in self.board_state:
+            for piece in row:
+                if not issubclass(piece.__class__, GamePiece) and piece.color == color:
+                    continue
+                if piece.get_moves() is not None:
+                    return False
+                return True
 
     def sim_board_state(self, piece: GamePiece, x, y):
         temp_board_state = copy.deepcopy(self.board_state)
