@@ -55,7 +55,3 @@ class Knight(GamePiece):
                 continue
 
         return moves
-
-    def move(self, x, y):
-        self.pos_x = x
-        self.pos_y = y

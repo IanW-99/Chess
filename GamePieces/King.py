@@ -7,6 +7,7 @@ class King(GamePiece):
     def __init__(self, x, y, color, size, board):
         super().__init__(x, y, color, size, 'King', board)
 
+        self.has_moved = False
         self.pos_x = x
         self.pos_y = y
         self.color = color
@@ -55,7 +56,3 @@ class King(GamePiece):
                 continue
 
         return moves
-
-    def move(self, x, y):
-        self.pos_x = x
-        self.pos_y = y

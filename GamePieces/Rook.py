@@ -7,12 +7,12 @@ class Rook(GamePiece):
     def __init__(self, x, y, color, size, board):
         super().__init__(x, y, color, size, 'Rook', board)
 
+        self.has_moved = False
         self.pos_x = x
         self.pos_y = y
         self.color = color
         self.size = size
         self.board = board
-        self.has_moved = False
 
     def can_move_to(self, x, y, move_type):
         if not self.is_valid_square(x, y):
@@ -61,7 +61,3 @@ class Rook(GamePiece):
 
         return moves
 
-    def move(self, x, y):
-        self.pos_x = x
-        self.pos_y = y
-        self.has_moved = True

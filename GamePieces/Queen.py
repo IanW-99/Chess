@@ -60,6 +60,3 @@ class Queen(GamePiece):
 
         return moves
 
-    def move(self, x, y):
-        self.pos_x = x
-        self.pos_y = y

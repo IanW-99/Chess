@@ -51,9 +51,11 @@ class GamePiece:
     def is_valid_square(x, y):
         return 0 <= x <= 7 and 0 <= y <= 7
 
-    @classmethod
-    def move(cls, x, y):
-        pass
+    def move(self, x, y):
+        self.pos_x = x
+        self.pos_y = y
+        if hasattr(self, 'has_moved'):
+            self.has_moved = True
 
     def validate_moves(self, moves: list):
         # reverse list to avoid iteration being interrupted by remove()

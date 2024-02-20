@@ -7,7 +7,6 @@ class Pawn(GamePiece):
     def __init__(self, x, y, color, size, board):
         super().__init__(x, y, color, size, 'Pawn', board)
 
-        self.initial_pos = x, y
         self.has_moved = False
         self.pos_x = x
         self.pos_y = y
@@ -62,9 +61,5 @@ class Pawn(GamePiece):
 
         return moves
 
-    def move(self, x, y):
-        self.pos_x = x
-        self.pos_y = y
-        self.has_moved = True
 
 
