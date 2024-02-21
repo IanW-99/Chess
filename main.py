@@ -22,10 +22,6 @@ turn_message = font.render('White Turn', True, 'Black')
 turn_message_rect = turn_message.get_rect()
 
 
-def get_game_state():
-    return
-
-
 def draw():
     # draw board surface
     screen.fill("pink")
@@ -36,6 +32,22 @@ def draw():
 
     # display turn message
     screen.blit(turn_message, turn_message_rect)
+
+
+def get_full_color(color):
+    if color == 'w':
+        return 'White'
+    return 'Black'
+
+
+def get_game_state():
+    return
+
+
+def get_opposite_color(color):
+    if color == 'w':
+        return 'b'
+    return 'w'
 
 
 def is_on_board(x, y):
@@ -57,7 +69,10 @@ while True:
             if is_on_board(mouse[0], mouse[1]):
                 board.handle_click(mouse[0]-board_x, mouse[1]-board_y)
 
-    if board.turn == 'w':
+    if board.is_checkmate:
+        turn_message = font.render(f"Checkmate! {get_full_color(get_opposite_color(board.turn))} wins!", True, 'Black')
+
+    elif board.turn == 'w':
         turn_message = font.render('White Turn', True, 'Black')
     else:
         turn_message = font.render('Black Turn', True, 'Black')

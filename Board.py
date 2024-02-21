@@ -12,7 +12,7 @@ from GamePieces.Rook import Rook
 class Board:
 
     def __init__(self, width, height):
-        self.checkmate = False
+        self.is_checkmate = False
         self.width = width
         self.height = height
         self.square_width = width // 8
@@ -76,7 +76,7 @@ class Board:
                     if not self.is_in_check(self.board_state, self.turn):
                         return
                     if self.is_in_checkmate(self.turn):
-                        print("checkmate")
+                        self.is_checkmate = True
                     return
 
         self.default_squares()
@@ -120,11 +120,11 @@ class Board:
     def is_in_checkmate(self, color):
         for row in self.board_state:
             for piece in row:
-                if not issubclass(piece.__class__, GamePiece) and piece.color == color:
+                if not issubclass(piece.__class__, GamePiece) or piece.color != color:
                     continue
                 if len(piece.get_moves()) > 0:
                     return False
-                return True
+            return True
 
     def place_initial_pieces(self):
         init_board_state = [
