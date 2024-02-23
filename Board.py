@@ -1,4 +1,5 @@
 import copy
+
 from util.Square import Square
 from GamePiece import GamePiece
 from GamePieces.Bishop import Bishop
@@ -30,6 +31,40 @@ class Board:
     def turn(self, value):
         self._turn = value
 
+    def castle_king_side(self):
+        if self.turn == 'b':
+            affected_squares = {"king_start": (4, 0), "rook_start": (7, 0), "king_final": (6, 0), "rook_final": (5, 0)}
+        else:
+            affected_squares = {"king_start": (4, 7), "rook_start": (7, 7), "king_final": (6, 7), "rook_final": (5, 7)}
+
+        king = self.get_square_content(*affected_squares.get("king_start"))
+        rook = self.get_square_content(*affected_squares.get("rook_start"))
+
+        king.move(*affected_squares.get("king_final"))
+        self.update_square_content(*affected_squares.get("king_final"), king)
+        self.update_square_content(*affected_squares.get("king_start"), None)
+
+        rook.move(*affected_squares.get("rook_final"))
+        self.update_square_content(*affected_squares.get("rook_final"), rook)
+        self.update_square_content(*affected_squares.get("rook_start"), None)
+
+    def castle_queen_side(self):
+        if self.turn == 'b':
+            affected_squares = {"king_start": (4, 0), "rook_start": (0, 0), "king_final": (2, 0), "rook_final": (3, 0)}
+        else:
+            affected_squares = {"king_start": (4, 7), "rook_start": (0, 7), "king_final": (2, 7), "rook_final": (3, 7)}
+
+        king = self.get_square_content(*affected_squares.get("king_start"))
+        rook = self.get_square_content(*affected_squares.get("rook_start"))
+
+        king.move(*affected_squares.get("king_final"))
+        self.update_square_content(*affected_squares.get("king_final"), king)
+        self.update_square_content(*affected_squares.get("king_start"), None)
+
+        rook.move(*affected_squares.get("rook_final"))
+        self.update_square_content(*affected_squares.get("rook_final"), rook)
+        self.update_square_content(*affected_squares.get("rook_start"), None)
+
     def create_squares(self):
         squares = {}
         for y in range(8):
@@ -52,6 +87,12 @@ class Board:
                 if piece is not None:
                     piece.draw(board_surface)
 
+    @staticmethod
+    def get_opposite_color(color):
+        if color == 'w':
+            return 'b'
+        return 'w'
+
     def handle_click(self, x_relative, y_relative):
         x = (x_relative - 1) // self.square_width
         y = (y_relative - 1) // self.square_height
@@ -67,9 +108,15 @@ class Board:
             else:
                 selected_square_content = self.get_square_content(self.selected_square.x, self.selected_square.y)
                 if selected_square_content is not None:
-                    selected_square_content.move(x, y)
-                    self.update_square_content(self.selected_square.x, self.selected_square.y, None)
-                    self.update_square_content(x, y, selected_square_content)
+                    if square.status == 'castle_king_side':
+                        self.castle_king_side()
+                    elif square.status == 'castle_queen_side':
+                        self.castle_queen_side()
+                    else:
+                        selected_square_content.move(x, y)
+                        self.update_square_content(self.selected_square.x, self.selected_square.y, None)
+                        self.update_square_content(x, y, selected_square_content)
+
                     self.selected_square = None
                     self.default_squares()
                     self.update_turn()
@@ -106,6 +153,9 @@ class Board:
 
     def is_in_check(self, board_state, color):
         # iterate through all moves and check if any are same square as king
+        if board_state is None:
+            board_state = self.board_state
+
         king_location = self.get_king_location(board_state, color)
 
         for row in board_state:
@@ -184,7 +234,4 @@ class Board:
             square.status = move[1]
 
     def update_turn(self):
-        if self.turn == 'w':
-            self.turn = 'b'
-        else:
-            self.turn = 'w'
+        self.turn = self.get_opposite_color(self.turn)

@@ -40,10 +40,6 @@ def get_full_color(color):
     return 'Black'
 
 
-def get_game_state():
-    return
-
-
 def get_opposite_color(color):
     if color == 'w':
         return 'b'
@@ -71,7 +67,6 @@ while True:
 
     if board.is_checkmate:
         turn_message = font.render(f"Checkmate! {get_full_color(get_opposite_color(board.turn))} wins!", True, 'Black')
-
     elif board.turn == 'w':
         turn_message = font.render('White Turn', True, 'Black')
     else:

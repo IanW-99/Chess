@@ -25,7 +25,7 @@ class Square:
                 return 150, 255, 100
             else:
                 return 50, 220, 0
-        if self.status == 'move':
+        if self.status == 'move' or self.status == 'castle_king_side' or self.status == 'castle_queen_side':
             return 115, 200, 225
         if self.status == 'attack':
             return 220, 60, 25

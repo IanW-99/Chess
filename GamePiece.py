@@ -63,5 +63,6 @@ class GamePiece:
             if not self.causes_check(move[0][0], move[0][1]):
                 continue
             moves.remove(move)
+
         return moves
 
