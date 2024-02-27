@@ -11,7 +11,11 @@ class Square:
         self.pos_x = x * width
         self.pos_y = y * height
         self.color = self.determine_color()
-        self.rect = pygame.Rect(self.pos_x, self.pos_y, width, height)
+        self.rect = pygame.Rect(self.pos_x, self.pos_y, self.width, self.height)
+        self.highlight_rect = pygame.Rect(self.pos_x + self.width // 10,
+                                          self.pos_y + self.height // 10,
+                                          self.width - self.width // 5,
+                                          self.height - self.height // 5)
 
     def determine_color(self):
         if (self.x + self.y) % 2 == 0:
@@ -29,16 +33,12 @@ class Square:
             return 115, 200, 225
         if self.status == 'attack':
             return 220, 60, 25
-        else:
-            if self.color == 'b':
-                return 112, 102, 119
-            else:
-                return 204, 183, 174
 
     def draw(self, display):
-        highlight = self.determine_highlight_color()
-        pygame.draw.rect(display, highlight, self.rect)
-        # update to keep original color border of square at all times
+        pygame.draw.rect(display, self.get_default_color(), self.rect)
+        if self.status == '':
+            return
+        pygame.draw.rect(display, self.determine_highlight_color(), self.highlight_rect)
 
     def get_coord(self):
         return self.x, self.y
@@ -48,4 +48,10 @@ class Square:
 
     def get_coord_y(self):
         return self.y
+
+    def get_default_color(self):
+        if self.color == 'b':
+            return 112, 102, 119
+        else:
+            return 204, 183, 174
 
