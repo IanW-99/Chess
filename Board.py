@@ -23,6 +23,7 @@ class Board:
         self.selected_square = None
         self._turn = 'w'
         self._active_promotion = False
+        self.promoting_piece = None
 
     @property
     def turn(self):
@@ -126,7 +127,7 @@ class Board:
                         self.update_square_content(self.selected_square.x, self.selected_square.y, None)
                         self.update_square_content(x, y, selected_square_content)
                         if self.promotion_check(selected_square_content):
-                            self.promote(selected_square_content)
+                            self.promotion_signal(selected_square_content)
 
                     self.selected_square = None
                     self.default_squares()
@@ -225,6 +226,31 @@ class Board:
 
         return board_state
 
+    def promote(self, piece_type):
+        if not issubclass(self.promoting_piece.__class__, GamePiece):
+            raise Exception(f"Promoting piece was not of valid type. Was of type {self.promoting_piece.__class__}")
+
+        x = self.promoting_piece.pos_x
+        y = self.promoting_piece.pos_y
+        color = self.promoting_piece.color
+
+        piece_type.lower()
+        if piece_type == 'bishop':
+            new_piece = Bishop(x, y, color, 'Bishop', self)
+        elif piece_type == 'knight':
+            new_piece = Knight(x, y, color, 'Knight', self)
+        elif piece_type == 'queen':
+            new_piece = Queen(x, y, color, 'Queen', self)
+        elif piece_type == 'rook':
+            new_piece = Rook(x, y, color, 'Rook', self)
+        else:
+            raise Exception("Promotion choice was not of valid type")
+
+        self.update_square_content(x, y, new_piece)
+
+        self.active_promotion = False
+        self.promoting_piece = None
+
     @staticmethod
     def promotion_check(piece: GamePiece):
         if not piece.piece_type == 'Pawn':
@@ -235,11 +261,9 @@ class Board:
             return False
         return True
 
-    @staticmethod
-    def promote(piece: GamePiece):
-
-        print("you must promote this pawn")
-        return
+    def promotion_signal(self, piece: GamePiece):
+        self.promoting_piece = piece
+        self.active_promotion = True
 
     def sim_board_state(self, piece: GamePiece, x, y):
         temp_board_state = copy.deepcopy(self.board_state)
