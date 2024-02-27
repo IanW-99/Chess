@@ -1,6 +1,7 @@
 import pygame
 
 from Board import Board
+from util.Button import Button
 
 pygame.init()
 

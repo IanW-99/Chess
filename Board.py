@@ -22,6 +22,7 @@ class Board:
         self.board_state = self.place_initial_pieces()
         self.selected_square = None
         self._turn = 'w'
+        self._active_promotion = False
 
     @property
     def turn(self):
@@ -30,6 +31,14 @@ class Board:
     @turn.setter
     def turn(self, value):
         self._turn = value
+
+    @property
+    def active_promotion(self):
+        return self._active_promotion
+
+    @active_promotion.setter
+    def active_promotion(self, value):
+        self._active_promotion = value
 
     def castle_king_side(self):
         if self.turn == 'b':
@@ -116,6 +125,8 @@ class Board:
                         selected_square_content.move(x, y)
                         self.update_square_content(self.selected_square.x, self.selected_square.y, None)
                         self.update_square_content(x, y, selected_square_content)
+                        if self.promotion_check(selected_square_content):
+                            self.promote(selected_square_content)
 
                     self.selected_square = None
                     self.default_squares()
@@ -213,6 +224,22 @@ class Board:
                     board_state[i][j] = Rook(j, i, color, self.square_width, self)
 
         return board_state
+
+    @staticmethod
+    def promotion_check(piece: GamePiece):
+        if not piece.piece_type == 'Pawn':
+            return False
+        if piece.color == 'b' and piece.pos_y != 7:
+            return False
+        if piece.color == 'w' and piece.pos_y != 0:
+            return False
+        return True
+
+    @staticmethod
+    def promote(piece: GamePiece):
+
+        print("you must promote this pawn")
+        return
 
     def sim_board_state(self, piece: GamePiece, x, y):
         temp_board_state = copy.deepcopy(self.board_state)
