@@ -186,7 +186,7 @@ class Board:
                     continue
                 if len(piece.get_moves()) > 0:
                     return False
-            return True
+        return True
 
     def place_initial_pieces(self):
         init_board_state = [
