@@ -236,13 +236,13 @@ class Board:
 
         piece_type.lower()
         if piece_type == 'bishop':
-            new_piece = Bishop(x, y, color, 'Bishop', self)
+            new_piece = Bishop(x, y, color, self.square_width, self)
         elif piece_type == 'knight':
-            new_piece = Knight(x, y, color, 'Knight', self)
+            new_piece = Knight(x, y, color, self.square_width, self)
         elif piece_type == 'queen':
-            new_piece = Queen(x, y, color, 'Queen', self)
+            new_piece = Queen(x, y, color, self.square_width, self)
         elif piece_type == 'rook':
-            new_piece = Rook(x, y, color, 'Rook', self)
+            new_piece = Rook(x, y, color, self.square_width, self)
         else:
             raise Exception("Promotion choice was not of valid type")
 

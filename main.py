@@ -87,7 +87,7 @@ def run_game():
                 if is_on_board(mouse[0], mouse[1]) and not board.active_promotion:
                     board.handle_click(mouse[0]-board_x, mouse[1]-board_y)
                 if is_on_promotion_menu(mouse[0], mouse[1]) and board.active_promotion:
-                    promotion_menu.handle_click(mouse[0]-promotion_menu_x, mouse[1]-promotion_menu_y)
+                    promotion_menu.handle_click((mouse[0]-promotion_menu_x, mouse[1]-promotion_menu_y))
 
         if board.is_checkmate:
             turn_message = font.render(f"Checkmate! {get_full_color(get_opposite_color(board.turn))} wins!",
