@@ -27,9 +27,9 @@ class Pawn(GamePiece):
 
     def draw(self, board_surface):
         if self.color == 'w':
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\wPawn.png')
+            img = pygame.image.load('imgs/wPawn.png')
         else:
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\bPawn.png')
+            img = pygame.image.load('imgs/bPawn.png')
 
         scaled_img = pygame.transform.scale(img, (self.size, self.size))
         board_surface.blit(scaled_img, (self.pos_x * self.size, self.pos_y * self.size))

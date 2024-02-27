@@ -2,7 +2,7 @@ import pygame
 
 
 class Button:
-    def __init__(self, x, y, image, width=100, height=50, is_active=True,):
+    def __init__(self, x, y, image, width=100, height=50, is_active=True):
         self.image = image
         self.x = x
         self.y = y
@@ -25,5 +25,4 @@ class Button:
         if not self.is_active:
             return
         screen.blit(self.display, (self.x, self.y))
-
 

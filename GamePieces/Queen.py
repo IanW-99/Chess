@@ -26,9 +26,9 @@ class Queen(GamePiece):
 
     def draw(self, board_surface):
         if self.color == 'w':
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\wQueen.png')
+            img = pygame.image.load('imgs/wQueen.png')
         else:
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\bQueen.png')
+            img = pygame.image.load('imgs/bQueen.png')
 
         scaled_img = pygame.transform.scale(img, (self.size, self.size))
         board_surface.blit(scaled_img, (self.pos_x * self.size, self.pos_y * self.size))

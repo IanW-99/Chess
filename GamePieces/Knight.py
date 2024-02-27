@@ -26,9 +26,9 @@ class Knight(GamePiece):
 
     def draw(self, board_surface):
         if self.color == 'w':
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\wKnight.png')
+            img = pygame.image.load('imgs/wKnight.png')
         else:
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\bKnight.png')
+            img = pygame.image.load('imgs/bKnight.png')
 
         scaled_img = pygame.transform.scale(img, (self.size, self.size))
         board_surface.blit(scaled_img, (self.pos_x * self.size, self.pos_y * self.size))

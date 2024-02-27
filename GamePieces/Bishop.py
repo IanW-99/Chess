@@ -26,9 +26,9 @@ class Bishop(GamePiece):
 
     def draw(self, board_surface):
         if self.color == 'w':
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\wBishop.png')
+            img = pygame.image.load('imgs/wBishop.png')
         else:
-            img = pygame.image.load('C:\\Users\\iwash\\PycharmProjects\\Chess\\imgs\\bBishop.png')
+            img = pygame.image.load('imgs/bBishop.png')
 
         scaled_img = pygame.transform.scale(img, (self.size, self.size))
         board_surface.blit(scaled_img, (self.pos_x * self.size, self.pos_y * self.size))
