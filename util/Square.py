@@ -23,22 +23,11 @@ class Square:
         else:
             return 'w'
 
-    def determine_highlight_color(self):
-        if self.status == 'selected':
-            if self.color == 'b':
-                return 150, 255, 100
-            else:
-                return 50, 220, 0
-        if self.status == 'move' or self.status == 'castle_king_side' or self.status == 'castle_queen_side':
-            return 115, 200, 225
-        if self.status == 'attack':
-            return 220, 60, 25
-
     def draw(self, display):
         pygame.draw.rect(display, self.get_default_color(), self.rect)
         if self.status == '':
             return
-        pygame.draw.rect(display, self.determine_highlight_color(), self.highlight_rect)
+        pygame.draw.rect(display, self.get_highlight_color(), self.highlight_rect)
 
     def get_coord(self):
         return self.x, self.y
@@ -54,4 +43,12 @@ class Square:
             return 112, 102, 119
         else:
             return 204, 183, 174
+
+    def get_highlight_color(self):
+        if self.status == 'selected':
+            return 150, 255, 100
+        if self.status == 'move' or self.status == 'castle_king_side' or self.status == 'castle_queen_side':
+            return 115, 200, 225
+        if self.status == 'attack':
+            return 220, 60, 25
 
