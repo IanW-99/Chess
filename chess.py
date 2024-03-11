@@ -1,7 +1,7 @@
 import pygame
 
 from Board import Board
-from PromotionMenu import PromotionMenu
+from menus.PromotionMenu import PromotionMenu
 
 pygame.init()
 

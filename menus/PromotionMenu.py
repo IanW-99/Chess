@@ -22,28 +22,32 @@ class PromotionMenu:
                                 button_width,
                                 button_height,
                                 'gray',
-                                'Queen')
+                                'Queen',
+                                'black')
 
         self.bishop_btn = Button(button_x,
                                  button_height_slice * 2,
                                  button_width,
                                  button_height,
                                  'gray',
-                                 'Bishop')
+                                 'Bishop',
+                                 'black')
 
         self.knight_btn = Button(button_x,
                                  button_height_slice * 3,
                                  button_width,
                                  button_height,
                                  'gray',
-                                 'Knight')
+                                 'Knight',
+                                 'black')
 
         self.rook_btn = Button(button_x,
                                button_height_slice * 4,
                                button_width,
                                button_height,
                                'gray',
-                               'Rook')
+                               'Rook',
+                               'black')
 
     def draw_menu(self, surface):
         pygame.draw.rect(surface, "pink", self.rect)

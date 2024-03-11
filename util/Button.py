@@ -3,19 +3,28 @@ import pygame
 
 class Button:
 
-    def __init__(self, x, y, width, height, color, text='', ):
+    def __init__(self, x, y, width, height, color, text='', outline=None):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.color = color
         self.text = text
+        self.outline = outline
 
-    def draw(self, surface, outline=None):
-        if outline:
-            pygame.draw.rect(surface, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
+    def draw(self, surface):
+        if self.outline:
+            pygame.draw.rect(surface,
+                             self.outline,
+                             (self.x - 2, self.y - 2, self.width + 4, self.height + 4),
+                             0,
+                             border_radius=2)
 
-        pygame.draw.rect(surface, self.color, (self.x, self.y, self.width, self.height), 0)
+        pygame.draw.rect(surface,
+                         self.color,
+                         (self.x, self.y, self.width, self.height),
+                         0,
+                         border_radius=2)
 
         if self.text != '':
             font = pygame.font.Font('freesansbold.ttf', 32)
