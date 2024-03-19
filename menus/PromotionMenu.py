@@ -15,10 +15,10 @@ class PromotionMenu:
         button_width = self.width // 2
         button_height = self.height // 10
         button_x = (self.width // 2) - (button_width // 2)
-        button_height_slice = self.height // 5
+        button_height_slice = self.height // 8
 
         self.queen_btn = Button(button_x,
-                                button_height_slice,
+                                button_height_slice * 2,
                                 button_width,
                                 button_height,
                                 'gray',
@@ -26,7 +26,7 @@ class PromotionMenu:
                                 'black')
 
         self.bishop_btn = Button(button_x,
-                                 button_height_slice * 2,
+                                 button_height_slice * 3,
                                  button_width,
                                  button_height,
                                  'gray',
@@ -34,7 +34,7 @@ class PromotionMenu:
                                  'black')
 
         self.knight_btn = Button(button_x,
-                                 button_height_slice * 3,
+                                 button_height_slice * 4,
                                  button_width,
                                  button_height,
                                  'gray',
@@ -42,7 +42,7 @@ class PromotionMenu:
                                  'black')
 
         self.rook_btn = Button(button_x,
-                               button_height_slice * 4,
+                               button_height_slice * 5,
                                button_width,
                                button_height,
                                'gray',
@@ -52,10 +52,10 @@ class PromotionMenu:
     def draw_menu(self, surface):
         pygame.draw.rect(surface, "pink", self.rect)
 
-        promotion_message = self.font.render('Choose Promotion:', True, 'Black')
-        promotion_message.get_rect().center = (self.width // 2, self.height // 2)
+        promotion_message = self.font.render('Promote Pawn', True, 'Black')
+        promotion_message_rect = promotion_message.get_rect(center=(self.rect.width//2, self.height // 8))
 
-        surface.blit(promotion_message, promotion_message.get_rect())
+        surface.blit(promotion_message, promotion_message_rect)
 
         self.queen_btn.draw(surface)
         self.bishop_btn.draw(surface)
