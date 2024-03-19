@@ -54,8 +54,8 @@ def main():
             turn_message_background = pygame.Rect(0, 0, turn_message.get_width() + 10, turn_message.get_height() + 10)
             turn_message_background.center = center
 
-            pygame.draw.rect(screen, 'black', turn_message_border, border_radius=5)
-            pygame.draw.rect(screen, 'gray', turn_message_background, border_radius=5)
+            pygame.draw.rect(screen, 'black', turn_message_border, border_radius=2)
+            pygame.draw.rect(screen, 'gray', turn_message_background, border_radius=2)
             screen.blit(turn_message, turn_message.get_rect(center=center))
 
         if board.active_promotion:
