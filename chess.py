@@ -2,6 +2,7 @@ import pygame
 
 from Board import Board
 from menus.PromotionMenu import PromotionMenu
+from menus.WinScreen import WinScreen
 
 pygame.init()
 
@@ -12,18 +13,14 @@ pygame.display.set_caption("Chess")
 
 board_size = 640
 board_surface = pygame.Surface((board_size, board_size))
-
 board_x = window_size[0] // 2 - board_size // 2
 board_y = window_size[1] // 2 - board_size // 2
-
 board = Board(board_size, board_size)
 
 promotion_menu_size = ((window_size[0] - board_size) // 2, board_size)
 promotion_menu_surface = pygame.Surface(promotion_menu_size)
-
 promotion_menu_x = board_x + window_size[0] // 2
 promotion_menu_y = board_y
-
 promotion_menu = PromotionMenu(*promotion_menu_size, board)
 
 
@@ -75,6 +72,8 @@ def run_game():
 
     font = pygame.font.Font('freesansbold.ttf', 32)
 
+    turn_message = font.render(f'{board.turn} Turn', True, 'Black')
+
     while running:
         # Process player inputs.
         mouse = pygame.mouse.get_pos()
@@ -89,16 +88,43 @@ def run_game():
                 if is_on_promotion_menu(mouse[0], mouse[1]) and board.active_promotion:
                     promotion_menu.handle_click((mouse[0]-promotion_menu_x, mouse[1]-promotion_menu_y))
 
+        draw_game(turn_message)
+
         if board.is_checkmate:
             turn_message = font.render(f"Checkmate! {get_full_color(get_opposite_color(board.turn))} wins!",
                                        True,
                                        "Black")
+            run_win_screen(get_full_color(get_opposite_color(board.turn)))
         elif board.turn == 'w':
             turn_message = font.render('White Turn', True, 'Black')
         else:
             turn_message = font.render('Black Turn', True, 'Black')
 
         draw_game(turn_message)
+
+
+def run_win_screen(winner):
+    ws_size = ((window_size[0] / 2.5), (window_size[1] / 2.5))
+    ws_surface = pygame.Surface((ws_size[0], ws_size[1]))
+    ws_x = window_size[0] // 2
+    ws_y = window_size[1] // 2
+    win_screen = WinScreen(*ws_size, winner)
+
+    running = True
+
+    while running:
+        win_screen.draw(ws_surface)
+        screen.blit(ws_surface,
+                    (ws_x - ws_surface.get_width() // 2,
+                     ws_y - ws_surface.get_height() // 2))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+
+        pygame.display.flip()
+        clock.tick(60)
 
 
 run_game()
