@@ -146,6 +146,14 @@ def main():
                     raise SystemExit
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if options_menu.main_menu_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_x)):
+                        print("Nothing happens here yet oops")
+                    elif options_menu.new_game_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_y)):
+                        restart()
+                    elif options_menu.quit_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_y)):
+                        pygame.quit()
+                        raise SystemExit
 
             pygame.display.flip()
             clock.tick(60)
