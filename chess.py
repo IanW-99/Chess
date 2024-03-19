@@ -38,17 +38,25 @@ def main():
     def draw_game(turn_message=None):
         screen.fill("pink")
 
-        border_rect = pygame.Rect(board_x-5, board_y-5, board_size + 10, board_size + 10)
+        board_border = pygame.Rect(board_x-5, board_y-5, board_size + 10, board_size + 10)
         pygame.draw.rect(screen,
                          'black',
-                         border_rect,
+                         board_border,
                          border_radius=5)
 
         board.draw_board(board_surface)
         screen.blit(board_surface, (board_x, board_y))
 
         if turn_message is not None:
-            screen.blit(turn_message, turn_message.get_rect())
+            center = (((window_size[0] - board_size) // 4), (board_y + board_size // 2))
+            turn_message_border = pygame.Rect(0, 0, turn_message.get_width() + 20, turn_message.get_height() + 20)
+            turn_message_border.center = center
+            turn_message_background = pygame.Rect(0, 0, turn_message.get_width() + 10, turn_message.get_height() + 10)
+            turn_message_background.center = center
+
+            pygame.draw.rect(screen, 'black', turn_message_border, border_radius=5)
+            pygame.draw.rect(screen, 'gray', turn_message_background, border_radius=5)
+            screen.blit(turn_message, turn_message.get_rect(center=center))
 
         if board.active_promotion:
             promotion_menu.draw_menu(promotion_menu_surface)
