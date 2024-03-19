@@ -1,6 +1,7 @@
 import pygame
 
 from Board import Board
+from menus.OptionsMenu import OptionsMenu
 from menus.PromotionMenu import PromotionMenu
 from menus.WinScreen import WinScreen
 
@@ -18,6 +19,12 @@ def main():
     board_x = window_size[0] // 2 - board_size // 2
     board_y = window_size[1] // 2 - board_size // 2
     board = Board(board_size, board_size)
+
+    options_menu_size = ((window_size[0] / 2.5), (window_size[1] / 2.5))
+    options_menu_surface = pygame.Surface((options_menu_size[0], options_menu_size[1]))
+    options_menu_x = window_size[0] // 2 - options_menu_surface.get_width() // 2
+    options_menu_y = window_size[1] // 2 - options_menu_surface.get_height() // 2
+    options_menu = OptionsMenu(*options_menu_size)
 
     promotion_menu_size = ((window_size[0] - board_size) / 2.5, board_size)
     promotion_menu_surface = pygame.Surface(promotion_menu_size)
@@ -107,6 +114,8 @@ def main():
                         board.handle_click(mouse[0]-board_x, mouse[1]-board_y)
                     elif is_on_promotion_menu(mouse[0], mouse[1]) and board.active_promotion:
                         promotion_menu.handle_click((mouse[0]-promotion_menu_x, mouse[1]-promotion_menu_y))
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    run_options_menu()
 
             draw_game(turn_message)
 
@@ -121,6 +130,25 @@ def main():
                 turn_message = font.render('Black Turn', True, 'Black')
 
             draw_game(turn_message)
+
+    def run_options_menu():
+        running = True
+
+        while running:
+            mouse = pygame.mouse.get_pos()
+
+            options_menu.draw(options_menu_surface)
+            screen.blit(options_menu_surface, (options_menu_x, options_menu_y))
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    raise SystemExit
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return
+
+            pygame.display.flip()
+            clock.tick(60)
 
     def run_win_screen(winner):
         ws_size = ((window_size[0] / 2.5), (window_size[1] / 2.5))
