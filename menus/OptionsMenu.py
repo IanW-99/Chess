@@ -20,7 +20,7 @@ class OptionsMenu:
                                     self.height // 5 * 2,
                                     button_width,
                                     self.height // 10,
-                                    'gray',
+                                    'gray85',
                                     'Main Menu',
                                     'black')
 
@@ -28,7 +28,7 @@ class OptionsMenu:
                                    self.height // 5 * 3,
                                    button_width,
                                    self.height // 10,
-                                   'gray',
+                                   'gray85',
                                    'New Game',
                                    'black')
 
@@ -36,7 +36,7 @@ class OptionsMenu:
                                self.height // 5 * 4,
                                button_width,
                                self.height // 10,
-                               'gray',
+                               'gray85',
                                'Quit',
                                'black')
 

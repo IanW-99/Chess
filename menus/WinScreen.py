@@ -24,7 +24,7 @@ class WinScreen:
                                self.height // 6 * 2,
                                button_width,
                                self.height // 10,
-                               'gray',
+                               'gray85',
                                'Show Board',
                                'black')
 
@@ -32,7 +32,7 @@ class WinScreen:
                                    self.height // 6 * 3,
                                    button_width,
                                    self.height // 10,
-                                   'gray',
+                                   'gray85',
                                    'New Game',
                                    'black')
 
@@ -40,7 +40,7 @@ class WinScreen:
                                    self.height // 6 * 3,
                                    button_width,
                                    self.height // 10,
-                                   'gray',
+                                   'gray85',
                                    'New Game',
                                    'black')
 
@@ -48,7 +48,7 @@ class WinScreen:
                                     self.height // 6 * 4,
                                     button_width,
                                     self.height // 10,
-                                    'gray',
+                                    'gray85',
                                     'Main Menu',
                                     'black')
 
@@ -56,7 +56,7 @@ class WinScreen:
                                self.height // 6 * 5,
                                button_width,
                                self.height // 10,
-                               'gray',
+                               'gray85',
                                'Quit',
                                'black')
 

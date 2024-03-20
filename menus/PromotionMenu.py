@@ -21,7 +21,7 @@ class PromotionMenu:
                                 button_height_slice * 2,
                                 button_width,
                                 button_height,
-                                'gray',
+                                'gray85',
                                 'Queen',
                                 'black')
 
@@ -29,7 +29,7 @@ class PromotionMenu:
                                  button_height_slice * 3,
                                  button_width,
                                  button_height,
-                                 'gray',
+                                 'gray85',
                                  'Bishop',
                                  'black')
 
@@ -37,7 +37,7 @@ class PromotionMenu:
                                  button_height_slice * 4,
                                  button_width,
                                  button_height,
-                                 'gray',
+                                 'gray85',
                                  'Knight',
                                  'black')
 
@@ -45,7 +45,7 @@ class PromotionMenu:
                                button_height_slice * 5,
                                button_width,
                                button_height,
-                               'gray',
+                               'gray85',
                                'Rook',
                                'black')
 

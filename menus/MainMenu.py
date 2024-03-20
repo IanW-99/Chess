@@ -18,7 +18,7 @@ class MainMenu:
                                    self.height // 5 * 2,
                                    button_width,
                                    self.height // 10,
-                                   'gray',
+                                   'gray85',
                                    'New Game',
                                    'black')
 
@@ -26,7 +26,7 @@ class MainMenu:
                                    self.height // 5 * 3,
                                    button_width,
                                    self.height // 10,
-                                   'gray',
+                                   'gray85',
                                    'Settings',
                                    'black')
 
@@ -34,7 +34,7 @@ class MainMenu:
                                self.height // 5 * 4,
                                button_width,
                                self.height // 10,
-                               'gray',
+                               'gray85',
                                'Quit',
                                'black')
 
