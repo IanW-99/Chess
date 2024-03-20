@@ -1,6 +1,7 @@
 import pygame
 
 from Board import Board
+from menus.MainMenu import MainMenu
 from menus.OptionsMenu import OptionsMenu
 from menus.PromotionMenu import PromotionMenu
 from menus.WinScreen import WinScreen
@@ -13,7 +14,7 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Chess")
 
 
-def main():
+def game():
     board_size = 640
     board_surface = pygame.Surface((board_size, board_size))
     board_x = window_size[0] // 2 - board_size // 2
@@ -39,13 +40,15 @@ def main():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     raise SystemExit
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    run_options_menu()
 
             draw_game()
 
     def draw_game(turn_message=None):
-        screen.fill("pink")
+        screen.fill("pink1")
 
-        board_border = pygame.Rect(board_x-5, board_y-5, board_size + 10, board_size + 10)
+        board_border = pygame.Rect(board_x - 5, board_y - 5, board_size + 10, board_size + 10)
         pygame.draw.rect(screen,
                          'black',
                          board_border,
@@ -83,14 +86,14 @@ def main():
         return 'w'
 
     def is_on_board(x, y):
-        if (board_x <= x <= board_x+board_size) and (board_y <= y <= board_y+board_size):
+        if (board_x <= x <= board_x + board_size) and (board_y <= y <= board_y + board_size):
             return True
         else:
             return False
 
     def is_on_promotion_menu(x, y):
-        if (promotion_menu_x <= x <= promotion_menu_x+promotion_menu_size[0]) \
-                and (promotion_menu_y <= y <= promotion_menu_y+promotion_menu_size[1]):
+        if (promotion_menu_x <= x <= promotion_menu_x + promotion_menu_size[0]) \
+                and (promotion_menu_y <= y <= promotion_menu_y + promotion_menu_size[1]):
             return True
         else:
             return False
@@ -111,9 +114,9 @@ def main():
                     raise SystemExit
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if is_on_board(mouse[0], mouse[1]) and not board.active_promotion:
-                        board.handle_click(mouse[0]-board_x, mouse[1]-board_y)
+                        board.handle_click(mouse[0] - board_x, mouse[1] - board_y)
                     elif is_on_promotion_menu(mouse[0], mouse[1]) and board.active_promotion:
-                        promotion_menu.handle_click((mouse[0]-promotion_menu_x, mouse[1]-promotion_menu_y))
+                        promotion_menu.handle_click((mouse[0] - promotion_menu_x, mouse[1] - promotion_menu_y))
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     run_options_menu()
 
@@ -147,8 +150,8 @@ def main():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if options_menu.main_menu_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_x)):
-                        print("Nothing happens here yet oops")
+                    if options_menu.main_menu_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_y)):
+                        main()
                     elif options_menu.new_game_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_y)):
                         restart()
                     elif options_menu.quit_btn.is_hovered((mouse[0] - options_menu_x, mouse[1] - options_menu_y)):
@@ -192,8 +195,38 @@ def main():
     run_game()
 
 
+def main():
+
+    main_menu_surface = pygame.Surface(window_size)
+    main_menu = MainMenu(*window_size)
+
+    running = True
+
+    while running:
+        mouse = pygame.mouse.get_pos()
+
+        main_menu.draw(main_menu_surface)
+        screen.blit(main_menu_surface, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if main_menu.new_game_btn.is_hovered(mouse):
+                    game()
+                elif main_menu.settings_btn.is_hovered(mouse):
+                    raise Exception("Settings menu not yet implemented")
+                elif main_menu.quit_btn.is_hovered(mouse):
+                    pygame.quit()
+                    raise SystemExit
+
+        pygame.display.flip()
+        clock.tick(60)
+
+
 def restart():
-    main()
+    game()
     exit()
 
 

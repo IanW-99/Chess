@@ -50,7 +50,7 @@ class PromotionMenu:
                                'black')
 
     def draw_menu(self, surface):
-        pygame.draw.rect(surface, "pink", self.rect)
+        pygame.draw.rect(surface, "pink1", self.rect)
 
         promotion_message = self.font.render('Promote Pawn', True, 'Black')
         promotion_message_rect = promotion_message.get_rect(center=(self.rect.width//2, self.height // 8))
