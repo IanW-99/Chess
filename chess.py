@@ -185,6 +185,8 @@ def game():
                         display_board()
                     elif win_screen.new_game_btn.is_hovered((mouse[0] - ws_x, mouse[1] - ws_y)):
                         restart()
+                    elif win_screen.main_menu_btn.is_hovered((mouse[0] - ws_x, mouse[1] - ws_y)):
+                        main()
                     elif win_screen.quit_btn.is_hovered((mouse[0] - ws_x, mouse[1] - ws_y)):
                         pygame.quit()
                         raise SystemExit

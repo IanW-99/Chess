@@ -15,13 +15,13 @@ class WinScreen:
         self.msg = self.font.render(f"Checkmate! {self.winner} wins!",
                                     True,
                                     "Black")
-        self.msg_rect = self.msg.get_rect(center=(self.width / 2, self.height / 5))
+        self.msg_rect = self.msg.get_rect(center=(self.width / 2, self.height / 6))
 
         button_width = self.width // 2
         button_x = button_width // 2
 
         self.view_btn = Button(button_x,
-                               self.height // 5 * 2,
+                               self.height // 6 * 2,
                                button_width,
                                self.height // 10,
                                'gray',
@@ -29,15 +29,31 @@ class WinScreen:
                                'black')
 
         self.new_game_btn = Button(button_x,
-                                   self.height // 5 * 3,
+                                   self.height // 6 * 3,
                                    button_width,
                                    self.height // 10,
                                    'gray',
                                    'New Game',
                                    'black')
 
+        self.new_game_btn = Button(button_x,
+                                   self.height // 6 * 3,
+                                   button_width,
+                                   self.height // 10,
+                                   'gray',
+                                   'New Game',
+                                   'black')
+
+        self.main_menu_btn = Button(button_x,
+                                    self.height // 6 * 4,
+                                    button_width,
+                                    self.height // 10,
+                                    'gray',
+                                    'Main Menu',
+                                    'black')
+
         self.quit_btn = Button(button_x,
-                               self.height // 5 * 4,
+                               self.height // 6 * 5,
                                button_width,
                                self.height // 10,
                                'gray',
@@ -52,4 +68,6 @@ class WinScreen:
 
         self.view_btn.draw(surface)
         self.new_game_btn.draw(surface)
+        self.main_menu_btn.draw(surface)
         self.quit_btn.draw(surface)
+
