@@ -1,4 +1,5 @@
 import pygame
+import json
 
 from Board import Board
 from menus.MainMenu import MainMenu
@@ -6,16 +7,20 @@ from menus.OptionsMenu import OptionsMenu
 from menus.PromotionMenu import PromotionMenu
 from menus.WinScreen import WinScreen
 
+with open('settings.json', 'r') as openfile:
+    json_object = json.load(openfile)
+    window_size = (json_object['screen_width'], json_object['screen_height'])
+    board_size = json_object['board_size']
+    board_theme = json_object['theme']
+
 pygame.init()
 
-window_size = (1280, 720)
 screen = pygame.display.set_mode(window_size)
 clock = pygame.time.Clock()
 pygame.display.set_caption("Chess")
 
 
 def game():
-    board_size = 640
     board_surface = pygame.Surface((board_size, board_size))
     board_x = window_size[0] // 2 - board_size // 2
     board_y = window_size[1] // 2 - board_size // 2
