@@ -5,6 +5,7 @@ from Board import Board
 from menus.MainMenu import MainMenu
 from menus.OptionsMenu import OptionsMenu
 from menus.PromotionMenu import PromotionMenu
+from menus.SettingsMenu import SettingsMenu
 from menus.WinScreen import WinScreen
 
 with open('settings.json', 'r') as openfile:
@@ -223,7 +224,7 @@ def main():
                 if main_menu.new_game_btn.is_hovered(mouse):
                     game()
                 elif main_menu.settings_btn.is_hovered(mouse):
-                    raise Exception("Settings menu not yet implemented")
+                    run_settings_menu()
                 elif main_menu.quit_btn.is_hovered(mouse):
                     pygame.quit()
                     raise SystemExit
@@ -235,6 +236,30 @@ def main():
 def restart():
     game()
     exit()
+
+
+def run_settings_menu():
+    settings_menu_size = board_size, board_size
+    settings_menu_surface = pygame.Surface((settings_menu_size[0], settings_menu_size[1]))
+    settings_menu_x = window_size[0] // 2 - board_size // 2
+    settings_menu_y = window_size[1] // 2 - board_size // 2
+    settings_menu = SettingsMenu(*settings_menu_size)
+
+    running = True
+
+    while running:
+        mouse = pygame.mouse.get_pos()
+
+        settings_menu.draw(settings_menu_surface)
+        screen.blit(settings_menu_surface, (settings_menu_x, settings_menu_y))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+
+        pygame.display.flip()
+        clock.tick(60)
 
 
 main()
